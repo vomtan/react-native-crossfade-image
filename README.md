@@ -79,6 +79,42 @@ const styles = StyleSheet.create({
 export default MyComponent;
 ```
 
+## customAnimatedImage
+
+```jsx
+import React from 'react';
+import { View, StyleSheet, Animated } from 'react-native';
+import { CrossfadeImage } from 'react-native-crossfade-image';
+import FastImage from "react-native-fast-image";
+
+const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
+
+const MyComponent = ({ imageSource }) => (
+  <View style={styles.wrapper}>
+    <CrossfadeImage
+      style={styles.image}
+      source={imageSource}
+      resizeMode="cover"
+      customAnimatedImage={AnimatedFastImage}
+  />
+  </View>
+);
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    width: 100,
+    height: 100,
+  },
+});
+
+export default MyComponent;
+```
+
 ## Props
 
 | Prop          | Type                | Default       | Description                                                                                                                |
@@ -91,6 +127,7 @@ export default MyComponent;
 | `reverseFade` | boolean             | `false`       | Fade the images simultaneously so the old image fades out while the new image fades in. Use `true` for transparent images. |
 | `blurRadius`  | number              |               | The blur radius of the blur filter applied to the image.                                                                   |
 | `children`    | ReactNode           |               | Any children provided will be shown on top of the image similar to `ImageBackground` component.                            |
+| `customAnimatedImage`    | AnimatedComponent           |               | Default is Animated.Image, custom Animate Component using image load from other library such as FastImage , ExpoImage..) .                            |
 
 ## Example app demo
 
