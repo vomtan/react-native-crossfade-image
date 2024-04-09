@@ -18,7 +18,7 @@ export interface CrossfadeImageProps extends ImageProps {
   easing?: EasingFunction;
   children?: React.ReactNode;
   reverseFade?: boolean;
-  customAnimatedImage?: (visible?: boolean) => Animated.AnimatedComponent<typeof Image> | null | undefined;
+  customAnimatedImage?: () => Animated.AnimatedComponent<typeof Image> | null | undefined;
 }
 
 export const CrossfadeImage = ({
