@@ -7,6 +7,7 @@ import {
   ImageSourcePropType,
   StyleSheet,
   View,
+  Image,
 } from 'react-native';
 
 import { usePrevious } from './hooks';
@@ -17,6 +18,7 @@ export interface CrossfadeImageProps extends ImageProps {
   easing?: EasingFunction;
   children?: React.ReactNode;
   reverseFade?: boolean;
+  customAnimatedImage?: (visible?: boolean) => Animated.AnimatedComponent<typeof Image> | null | undefined;
 }
 
 export const CrossfadeImage = ({
@@ -26,6 +28,7 @@ export const CrossfadeImage = ({
   easing = Easing.ease,
   children,
   reverseFade = false,
+  customAnimatedImage,
   ...props
 }: CrossfadeImageProps) => {
   const prevSource = usePrevious(source);
@@ -77,14 +80,14 @@ export const CrossfadeImage = ({
 
   const reverseOpacity = reverseFade
     ? animatedOpacity.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 0],
-      })
+      inputRange: [0, 1],
+      outputRange: [1, 0],
+    })
     : 1;
-
+  const AnimatedImage = customAnimatedImage && Animated.Image
   return (
     <View style={[styles.root, style]}>
-      <Animated.Image
+      <AnimatedImage
         {...props}
         style={[styles.image, { opacity: reverseOpacity }]}
         source={oldSource}
@@ -92,7 +95,7 @@ export const CrossfadeImage = ({
         onLoad={handleUpdate}
       />
       {newSource && (
-        <Animated.Image
+        <AnimatedImage
           {...props}
           style={[styles.image, { opacity: animatedOpacity }]}
           source={newSource}
