@@ -85,7 +85,7 @@ export const CrossfadeImage = ({
     })
     : 1;
   // If customAnimatedImage is undefined, use Animated.Image
-  const AnimatedImage = customAnimatedImage && Animated.Image
+  const AnimatedImage = customAnimatedImage ?? Animated.Image
   return (
     <View style={[styles.root, style]}>
       <AnimatedImage
